@@ -2,11 +2,56 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+        line-height: 2;
+        min-width: 100vw;
+        min-height: 100vh;
+        align-items: center;
+        justify-content: center;
+        background: linear-gradient(135deg, #ffffff, #d4d4d4);
+        margin: 0;
+      }
+    </style>
   </head>
-  <body>{% for data in dataset %}
+  <body>  
 
-    {{ data.activity_name }} <br>
+  <div id="container">
+    <div class="bg-white shadow p-6"> 
+      <h1 class="text-lg mb-4">Activity List</h1> 
 
-    {% endfor %}
+      
+      <table class="w-full text-left"> 
+        <thead class="border-b"> 
+          <tr class="text-sm"> 
+            <th>Organizer</th> 
+            <th>Activity</th> 
+            <th>Location</th> 
+            <th>Date</th> 
+            <th>Start Time</th> 
+            <th>End Time</th> 
+            <th>Expected Participants</th> 
+          </tr> 
+        </thead> 
+        <tbody class="text-neutral-950 "> 
+          {% for row in data %}
+
+          <tr class="border-b"> 
+            {% for column in row %}
+
+            <td class="py-2 pr-3">{{ column }}</td> 
+
+            {% endfor %}
+          </tr>  
+
+          {% endfor %}
+          </tbody> 
+        </table> 
+      </div>
+  </div> 
   </body>
 </html>
