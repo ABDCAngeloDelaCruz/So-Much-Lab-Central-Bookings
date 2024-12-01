@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold text-gray-800 mb-4">Activity Booking Summary</h1>
+  <form method="get" action="{% url 'participant_booking' %}" class="mb-6">
+    <label for="participant_id" class="block text-sm font-medium text-gray-700 mb-2">Select Participant:</label>
+    <div class="flex items-center space-x-4">
+      <select name="participant_id" id="participant_id" class="p-2 border border-gray-300 rounded-lg w-full">
+        <option value="">-- Choose a Participant --</option>
+        {% for participant_id, participant_name in participants %}
+          <option value="{{ participant_id }}" {% if participant_id|stringformat:"s" == selected_participant_id %}selected{% endif %}>
+            {{ participant_name }}
+          </option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+        View Records
+      </button>
+    </div>
+  </form>
+
+  {% if data %}
+    <div class="mb-6">
+      <p><strong>Participant:</strong> {{ data.0.participant_name }}</p>
+      <p><strong>Birth Date:</strong> {{ data.0.birth_date }}</p>
+      <p><strong>Department:</strong> {{ data.0.department_name }}</p>
+      <p><strong>ID Number:</strong> {{ data.0.id_number }}</p>
+      <p><strong>Participant Type:</strong> {{ data.0.participant_type }}</p>
+    </div>
+
+    <h2 class="text-xl font-semibold text-gray-700 mb-4">Schedule</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
+        <thead class="bg-gray-100 border-b">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Organizer</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Activity</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Date</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Location</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Start Time</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">End Time</th>
+            <th class="px-4 py-2 text-left text-sm font-medium text-gray-600">Attended?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in data %}
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-2 text-sm text-gray-700">{{ entry.organizer_name }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ entry.activity_name }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ entry.activity_date }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ entry.location }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ entry.start_time }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ entry.end_time }}</td>
+            <td class="px-4 py-2 text-sm text-gray-700">{{ entry.attended }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    {% if selected_participant_id %}
+      <p class="text-gray-600">No booking details available for the selected participant.</p>
+    {% endif %}
+  {% endif %}
+</div>
+
+<script type="application/json" id="data-json">
+    {{ data|json_script:"data" }}
+  </script>
+
+<script>
+    const data = JSON.parse(document.getElementById('data-json').textContent);
+    console.log(data);
+</script>
+{% endblock %}
+
