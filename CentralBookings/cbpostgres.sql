@@ -121,9 +121,9 @@ CREATE TABLE booking (
 --        (11, 10, 'YES');
 
 -- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
--- a.Start_Time, a.End_Time, a.Expected_Participants
--- FROM organizer o, activity a
--- WHERE o.Organizer_ID = a.Organizer_ID
+-- a.Start_Time, a.End_Time, a.Expected_Participants 
+-- FROM organizer o, activity a 
+-- WHERE o.Organizer_ID = a.Organizer_ID 
 -- ORDER BY a.Date ASC;
 
 -- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
@@ -147,5 +147,5 @@ CREATE TABLE booking (
 -- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
 -- a.Start_Time, a.End_Time, a.Expected_Participants 
 -- FROM organizer o, activity a 
--- WHERE o.Organizer_ID = a.Organizer_ID AND a.Date BETWEEN '2023-11-05' AND '2024-12-01' 
+-- WHERE o.Organizer_ID = a.Organizer_ID AND a.Start_Time >= '10:00' AND a.End_Time <= '16:00' 
 -- ORDER BY a.Date ASC;

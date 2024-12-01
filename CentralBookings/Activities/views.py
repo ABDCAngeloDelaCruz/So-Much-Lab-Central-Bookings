@@ -94,7 +94,7 @@ def organizer_info_list_view(request):
                                                    "organizer_details": organizer_details,
                                                    "activities": activities, }
                   )
-    
+
 
 def participant_booking_view(request):
     cursor = connection.cursor()
