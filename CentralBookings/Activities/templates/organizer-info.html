@@ -38,31 +38,34 @@
       {% endif %}
 
       
-
-      {% if activities %}
-        <div>
-          <h2 class="text-xl font-semibold mb-2">Organizer Activities</h2>
-          <table class="w-full text-left">
-            <thead class="border-b">
-              <tr class="text-sm">
-                <th>Activity</th>
-                <th>Location</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-              </tr>
-            </thead>
-            <tbody class="text-neutral-950">
-              {% for activity in activities %}
-                <tr class="border-b">
-                  {% for column in activity %}
-                    <td class="py-2 pr-3">{{ column }}</td>
-                  {% endfor %}
+      {% if selected_organizer %}
+        {% if activities %}
+          <div>
+            <h2 class="text-xl font-semibold mb-2">Organizer Activities</h2>
+            <table class="w-full text-left">
+              <thead class="border-b">
+                <tr class="text-sm">
+                  <th>Activity</th>
+                  <th>Location</th>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
                 </tr>
-              {% endfor %}
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody class="text-neutral-950">
+                {% for activity in activities %}
+                  <tr class="border-b">
+                    {% for column in activity %}
+                      <td class="py-2 pr-3">{{ column }}</td>
+                    {% endfor %}
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        {% else %}
+          <p class="text-gray-500">This organizer doesn't have an Activity yet.</p>
+        {% endif %}
       {% endif %}
     </div>
   </div>
