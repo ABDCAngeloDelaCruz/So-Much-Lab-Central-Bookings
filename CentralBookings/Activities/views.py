@@ -4,8 +4,10 @@ from django.shortcuts import render
 # relative import of forms
 from .models import Activity, Organizer, Participant, Booking, Department
 
+
 def home_view(request):
     return render(request, "home.html")
+
 
 def activities_list_view(request):
     cursor = connection.cursor()
@@ -50,13 +52,41 @@ def activities_list_view(request):
     return render(request, "activities.html", {'data': query_results})
 
 
-def organizer_info_list_view():
-    return
+def organizer_info_list_view(request):
+    cursor = connection.cursor()
+
+    cursor.execute("SELECT Organizer_Name FROM organizer")
+    organizers = cursor.fetchall()
+
+    selected_organizer = request.GET.get("organizer", None)
+
+    organizer_details = None
+    activities = []
+
+    organizer_query = "SELECT Organizer_ID, Organizer_Name, Contact_Person_Given_Name, Contact_Person_Middle_Initial, Contact_Person_Last_Name, Contact_Email, Contact_Number, Organizer_Type, Organizer_Address FROM organizer WHERE Organizer_Name = %s"
+    activities_query = "SELECT a.Activity_Name, a.Location, a.Date, a.Start_Time, a.End_Time FROM activity a, organizer o WHERE a.Organizer_ID = o.Organizer_ID AND o.Organizer_Name = %s"
+
+    if selected_organizer:
+        cursor.execute(organizer_query, [selected_organizer])
+        organizer_details = cursor.fetchone()
+
+        if organizer_details:
+            organizer_details = (
+                f"{int(organizer_details[0]):05d}", *organizer_details[1:])
+
+        cursor.execute(activities_query, [selected_organizer])
+        activities = cursor.fetchall()
+
+    return render(request, "organizer-info.html", {"organizers": organizers,
+                                                   "selected_organizer": selected_organizer,
+                                                   "organizer_details": organizer_details,
+                                                   "activities": activities, }
+                  )
 
 
 def participant_booking_view(request):
     cursor = connection.cursor()
-    
+
     cursor.execute("""
         SELECT 
             ID_Number, 
@@ -105,22 +135,22 @@ def participant_booking_view(request):
         booking_details = cursor.fetchall()
 
         data = [
-        {
-            "participant_name": row[0],
-            "birth_date": row[1],
-            "department_name": row[2],
-            "participant_type": row[3],
-            "id_number": row[4],
-            "organizer_name": row[5],
-            "activity_name": row[6],
-            "activity_date": row[7],
-            "location": row[8],
-            "start_time": row[9],
-            "end_time": row[10],
-            "attended": row[11],
-        }
-        for row in booking_details
-    ]
+            {
+                "participant_name": row[0],
+                "birth_date": row[1],
+                "department_name": row[2],
+                "participant_type": row[3],
+                "id_number": row[4],
+                "organizer_name": row[5],
+                "activity_name": row[6],
+                "activity_date": row[7],
+                "location": row[8],
+                "start_time": row[9],
+                "end_time": row[10],
+                "attended": row[11],
+            }
+            for row in booking_details
+        ]
 
     return render(request, "participant-booking.html", {
         "participants": participants,
