@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div id="container">
+    <div class="bg-white shadow p-6">
+      <h1 class="text-lg mb-4">Organizer Information</h1>
+
+      <form method="get" class="mb-4">
+        <label for="organizer" class="block mb-2">Select Organizer:</label>
+        <select id="organizer" name="organizer" class="border rounded p-2 w-full">
+          <option value="" {% if not selected_organizer %}selected{% endif %}>-- Select an Organizer --</option>
+          {% for organizer in organizers %}
+            <option value="{{ organizer.0 }}" {% if organizer.0 == selected_organizer %}selected{% endif %}>
+              {{ organizer.0 }}
+            </option>
+          {% endfor %}
+        </select>
+        <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">View Organizer's Information</button>
+      </form>
+
+      {% if organizer_details %}
+        <div class="mb-6">
+          <h2 class="text-xl font-semibold mb-2">Organizer Details</h2>
+          <p><strong>Organizer ID:</strong> {{ organizer_details.0 }} </p>
+          <p><strong>Name:</strong> {{ organizer_details.1 }}</p>
+          <p><strong>Contact Person:</strong> 
+            {{ organizer_details.2 }} 
+            {% if organizer_details.3 is not None %}
+              {{ organizer_details.3 }}.
+            {% endif %} 
+            {{ organizer_details.4 }}
+          </p>
+          <p><strong>Email:</strong> {{ organizer_details.5 }}</p>
+          <p><strong>Contact Number:</strong> {{ organizer_details.6 }}</p>
+          <p><strong>Organizer Type:</strong> {{ organizer_details.7 }}</p>
+          <p><strong>Address:</strong> {{ organizer_details.8 }}</p>
+        </div>
+      {% endif %}
+
+      
+
+      {% if activities %}
+        <div>
+          <h2 class="text-xl font-semibold mb-2">Organizer Activities</h2>
+          <table class="w-full text-left">
+            <thead class="border-b">
+              <tr class="text-sm">
+                <th>Activity</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+              </tr>
+            </thead>
+            <tbody class="text-neutral-950">
+              {% for activity in activities %}
+                <tr class="border-b">
+                  {% for column in activity %}
+                    <td class="py-2 pr-3">{{ column }}</td>
+                  {% endfor %}
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}
