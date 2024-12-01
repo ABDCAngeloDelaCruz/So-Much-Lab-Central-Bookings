@@ -10,32 +10,32 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label for="filter_date">Filter by Date:</label>
-            <input type="date" id="filter_date" name="filter_date" class="border rounded p-2 w-full">
+            <input type="date" id="filter_date" name="filter_date" class="border rounded p-2 w-full" value="{{ request.GET.filter_date }}">
           </div>
           <div>
             <label for="start_date">Start Date:</label>
-            <input type="date" id="start_date" name="start_date" class="border rounded p-2 w-full">
+            <input type="date" id="start_date" name="start_date" class="border rounded p-2 w-full" value="{{ request.GET.start_date }}">
           </div>
           <div>
             <label for="end_date">End Date:</label>
-            <input type="date" id="end_date" name="end_date" class="border rounded p-2 w-full">
+            <input type="date" id="end_date" name="end_date" class="border rounded p-2 w-full" value="{{ request.GET.end_date }}">
           </div>
           <div>
             <label for="organizer">Filter by Organizer:</label>
-            <input type="text" id="organizer" name="organizer" class="border rounded p-2 w-full" placeholder="Organizer name">
+            <input type="text" id="organizer" name="organizer" class="border rounded p-2 w-full" placeholder="Organizer name" value="{{ request.GET.organizer }}">
           </div>
           <div>
             <label for="sort_field">Sort By:</label>
             <select id="sort_field" name="sort_field" class="border rounded p-2 w-full">
-              <option value="a.Date">Date</option>
-              <option value="o.Organizer_Name">Organizer Name</option>
+              <option value="a.Date" {% if request.GET.sort_field == "a.Date" or not request.GET.sort_field %}selected{% endif %}>Date</option>
+              <option value="o.Organizer_Name" {% if request.GET.sort_field == "o.Organizer_Name" %}selected{% endif %}>Organizer Name</option>
             </select>
           </div>
           <div>
             <label for="sort_order">Order:</label>
             <select id="sort_order" name="sort_order" class="border rounded p-2 w-full">
-              <option value="ASC">Ascending</option>
-              <option value="DESC">Descending</option>
+              <option value="ASC" {% if request.GET.sort_order == "ASC" or not request.GET.sort_order %}selected{% endif %}>Ascending</option>
+              <option value="DESC" {% if request.GET.sort_order == "DESC" %}selected{% endif %}>Descending</option>
             </select>
           </div>
         </div>
