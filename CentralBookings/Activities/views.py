@@ -140,7 +140,7 @@ def participant_booking_view(request):
                 "birth_date": row[1],
                 "department_name": row[2],
                 "participant_type": row[3],
-                "id_number": row[4],
+                "id_number": f"{row[4]:05}",
                 "organizer_name": row[5],
                 "activity_name": row[6],
                 "activity_date": row[7],
