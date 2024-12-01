@@ -1,31 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-      body {
-        display: flex;
-        flex-direction: column;
-        line-height: 2;
-        min-width: 100vw;
-        min-height: 100vh;
-        align-items: center;
-        justify-content: center;
-        background: linear-gradient(135deg, #ffffff, #d4d4d4);
-        margin: 0;
-      }
-    </style>
-  </head>
-  <body>  
+{% extends "base.html" %}
+
+{% block content %}
 
   <div id="container">
     <div class="bg-white shadow p-6"> 
       <h1 class="text-lg mb-4">Activity List</h1> 
 
       <form method="get" class="mb-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div>
             <label for="filter_date">Filter by Date:</label>
             <input type="date" id="filter_date" name="filter_date" class="border rounded p-2 w-full">
@@ -88,5 +70,4 @@
         </table> 
       </div>
   </div> 
-  </body>
-</html>
+{% endblock %}

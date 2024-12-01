@@ -4,6 +4,8 @@ from django.shortcuts import render
 # relative import of forms
 from .models import Activity, Organizer, Participant, Booking, Department
 
+def home_view(request):
+    return render(request, "home.html")
 
 def activities_list_view(request):
     cursor = connection.cursor()
