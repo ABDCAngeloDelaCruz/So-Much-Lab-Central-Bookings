@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="bg-white p-6 rounded-lg shadow-md">
+  <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Activity Booking Summary</h1>
+  <form method="get" action="{% url 'participant_booking' %}" class="mb-4">
+    <label for="participant_id" class="block text-sm font-medium">Select Participant:</label>
+    <div class="flex items-center space-x-4">
+      <select name="participant_id" id="participant_id" class="p-2 border border-gray-300 rounded-lg w-full">
+        <option value="">-- Choose a Participant --</option>
+        {% for participant_id, participant_name in participants %}
+          <option value="{{ participant_id }}" {% if participant_id|stringformat:"s" == selected_participant_id %}selected{% endif %}>
+            {{ participant_name }}
+          </option>
+        {% endfor %}
+      </select>
+      <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-400 focus:outline-none">
+        View Bookings
+      </button>
+    </div>
+  </form>
+
+  {% if data %}
+    <div class="grid grid-cols-3 gap-4">
+      <p class="col-start-1 row-start-1 text-left"><strong>Participant:</strong> {{ data.0.participant_name }}</p>
+      <p class="col-start-3 row-start-1 text-right"><strong>ID Number:</strong> {{ data.0.id_number }}</p>
+      <p class="col-start-1 row-start-2 text-left"><strong>Birth Date:</strong> {{ data.0.birth_date }}</p>
+      <p class="col-start-2 row-start-2 text-center"><strong>Department:</strong> {{ data.0.department_name }}</p>
+      <p class="col-start-3 row-start-2 text-right"><strong>Participant Type:</strong> {{ data.0.participant_type }}</p>
+    </div>
+    <br>
+    <h2 class="text-xl font-bold mb-4 text-center">Schedule</h2>
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white rounded-lg shadow-sm">
+        <thead class="bg-gray-400 border-b">
+          <tr>
+            <th class="px-4 py-2 text-left text-sm font-bold">Organizer</th>
+            <th class="px-4 py-2 text-left text-sm font-bold">Activity</th>
+            <th class="px-4 py-2 text-left text-sm font-bold">Date</th>
+            <th class="px-4 py-2 text-left text-sm font-bold">Location</th>
+            <th class="px-4 py-2 text-left text-sm font-bold">Start Time</th>
+            <th class="px-4 py-2 text-left text-sm font-bold">End Time</th>
+            <th class="px-4 py-2 text-left text-sm font-bold">Attended?</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for entry in data %}
+          <tr class="border-b hover:bg-gray-50">
+            <td class="px-4 py-2 text-sm text-gray-800">{{ entry.organizer_name }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ entry.activity_name }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ entry.activity_date }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ entry.location }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ entry.start_time }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ entry.end_time }}</td>
+            <td class="px-4 py-2 text-sm text-gray-800">{{ entry.attended }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% else %}
+    {% if selected_participant_id %}
+      <p class="text-center">No booking details available for the selected participant.</p>
+    {% endif %}
+  {% endif %}
+</div>
+{% endblock %}
+
