@@ -12,7 +12,6 @@ def home_view(request):
 def activities_list_view(request):
     cursor = connection.cursor()
 
-    # Default query
     query = "SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, a.Start_Time, a.End_Time, a.Expected_Participants FROM organizer o, activity a WHERE o.Organizer_ID = a.Organizer_ID"
     query_params = []
 
@@ -63,6 +62,7 @@ def activities_list_view(request):
     locations = Activity.objects.all()
 
     return render(request, "activities.html", {'data': query_results, 'orgs': organizers, 'locs': locations, 'filter_date': filter_date, 'start_time': start_time, 'end_time': end_time, 'organizer_name': organizer_name, 'location_name': location_name, 'sort_field': sort_field, 'sort_order': sort_order})
+
 
 def organizer_info_list_view(request):
     cursor = connection.cursor()
