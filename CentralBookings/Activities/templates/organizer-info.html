@@ -18,27 +18,32 @@
         <button type="submit" class="mt-4 bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-400">
           View Organizer's Information
         </button>
-              </form>
+      </form>
 
       {% if organizer_details %}
         <div class="mb-6">
-          <h2 class="text-xl font-semibold mb-2">Organizer Details</h2>
-          <p><strong>Organizer ID:</strong> {{ organizer_details.0 }} </p>
-          <p><strong>Name:</strong> {{ organizer_details.1 }}</p>
-          <p><strong>Contact Person:</strong> 
-            {{ organizer_details.2 }} 
-            {% if organizer_details.3 is not None %}
-              {{ organizer_details.3 }}.
-            {% endif %} 
-            {{ organizer_details.4 }}
-          </p>
-          <p><strong>Email:</strong> {{ organizer_details.5 }}</p>
-          <p><strong>Contact Number:</strong> {{ organizer_details.6 }}</p>
-          <p><strong>Organizer Type:</strong> {{ organizer_details.7 }}</p>
-          <p><strong>Address:</strong> {{ organizer_details.8 }}</p>
+          <h2 class="text-xl font-semibold mb-4">Organizer Details</h2>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <p><strong>Organizer ID:</strong> {{ organizer_details.0 }}</p>
+              <p><strong>Name:</strong> {{ organizer_details.1 }}</p>
+              <p><strong>Contact Person:</strong> 
+                {{ organizer_details.2 }} 
+                {% if organizer_details.3 is not None %}
+                  {{ organizer_details.3 }}.
+                {% endif %} 
+                {{ organizer_details.4 }}
+              </p>
+              <p><strong>Contact Email:</strong> {{ organizer_details.5 }}</p>
+              <p><strong>Contact Number:</strong> {{ organizer_details.6 }}</p>
+            </div>
+            <div>
+              <p><strong>Type:</strong> {{ organizer_details.7 }}</p>
+              <p><strong>Address:</strong> {{ organizer_details.8 }}</p>
+            </div>
+          </div>
         </div>
       {% endif %}
-
       
       {% if selected_organizer %}
         {% if activities %}
