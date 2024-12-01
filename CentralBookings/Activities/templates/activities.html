@@ -24,6 +24,41 @@
     <div class="bg-white shadow p-6"> 
       <h1 class="text-lg mb-4">Activity List</h1> 
 
+      <form method="get" class="mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="filter_date">Filter by Date:</label>
+            <input type="date" id="filter_date" name="filter_date" class="border rounded p-2 w-full">
+          </div>
+          <div>
+            <label for="start_date">Start Date:</label>
+            <input type="date" id="start_date" name="start_date" class="border rounded p-2 w-full">
+          </div>
+          <div>
+            <label for="end_date">End Date:</label>
+            <input type="date" id="end_date" name="end_date" class="border rounded p-2 w-full">
+          </div>
+          <div>
+            <label for="organizer">Filter by Organizer:</label>
+            <input type="text" id="organizer" name="organizer" class="border rounded p-2 w-full" placeholder="Organizer name">
+          </div>
+          <div>
+            <label for="sort_field">Sort By:</label>
+            <select id="sort_field" name="sort_field" class="border rounded p-2 w-full">
+              <option value="a.Date">Date</option>
+              <option value="o.Organizer_Name">Organizer Name</option>
+            </select>
+          </div>
+          <div>
+            <label for="sort_order">Order:</label>
+            <select id="sort_order" name="sort_order" class="border rounded p-2 w-full">
+              <option value="ASC">Ascending</option>
+              <option value="DESC">Descending</option>
+            </select>
+          </div>
+        </div>
+        <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded">Apply Filters</button>
+      </form>
       
       <table class="w-full text-left"> 
         <thead class="border-b"> 

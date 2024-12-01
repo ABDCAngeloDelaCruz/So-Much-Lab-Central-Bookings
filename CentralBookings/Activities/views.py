@@ -29,7 +29,7 @@ def activities_list_view(request):
     query_params = []
 
     if filter_date:
-        query += "AND a.Date = %s"
+        query += " AND a.Date = %s"
         query_params.append(filter_date)
     elif start_date and end_date:
         query += " AND a.Date BETWEEN %s AND %s"
