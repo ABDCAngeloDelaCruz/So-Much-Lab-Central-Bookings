@@ -119,36 +119,32 @@ CREATE TABLE booking (
 --        (4, 7, 'NO'),
 --        (11, 10, 'YES');
 
--- SELECT * FROM activity;
--- SELECT * FROM booking;
--- SELECT * FROM department;
--- SELECT * FROM organizer;
--- SELECT * FROM participant; 
-
--- SELECT o.Organizer_Name "Organizer", a.Activity_Name "Activity", a.Location "Location", a.Date "Date of Activity",
--- a.Start_Time "Start Time", a.End_Time "End Time", a.Expected_Participants "Expected Participants"
+-- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
+-- a.Start_Time, a.End_Time, a.Expected_Participants
 -- FROM organizer o, activity a
--- WHERE a.Date = '2023-11-05' AND o.Organizer_ID = a.Organizer_ID;
+-- WHERE o.Organizer_ID = a.Organizer_ID
+-- ORDER BY a.Date ASC;
 
--- SELECT CONCAT(p.Participant_Given_Name, ' ',  p.Participant_Last_Name) "Name", b.Has_Attended "Has Attended?"
--- FROM participant p, booking b, activity a
--- WHERE a.Activity_Name = 'Tech Conference' AND b.Participant_ID = p.ID_Number AND b.Activity_ID = a.Activity_ID;
+-- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
+-- a.Start_Time, a.End_Time, a.Expected_Participants 
+-- FROM organizer o, activity a 
+-- WHERE o.Organizer_ID = a.Organizer_ID AND a.Date = '2023-11-02' 
+-- ORDER BY a.Date ASC;
 
--- SELECT o.Organizer_Name "Organizer", a.Activity_Name "Activity", a.Date "Date of Activity", a.Location "Location",
--- a.Start_Time "Start Time", a.End_Time "End Time", b.Has_Attended "Has Attended?"
--- FROM participant p, booking b, activity a, organizer o
--- WHERE p.Participant_Given_Name = 'Faker' AND p.Participant_Last_Name = 'Santos' AND b.Participant_ID = p.ID_Number AND b.Activity_ID = a.Activity_ID
--- AND a.Organizer_ID = o.Organizer_ID
--- ORDER BY a.Date desc;
+-- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
+-- a.Start_Time, a.End_Time, a.Expected_Participants 
+-- FROM organizer o, activity a 
+-- WHERE o.Organizer_ID = a.Organizer_ID AND a.Date = '2023-11-05' 
+-- ORDER BY o.Organizer_Name DESC;
 
--- SELECT a.Activity_Name "Activity", a.Location "Location", a.Date "Date of Activity", 
--- a.Start_Time "Start Time", a.End_Time "End Time"
--- FROM activity a, organizer o
--- WHERE o.Organizer_Name = 'Chinese For Everyone' AND a.Organizer_ID = o.Organizer_ID
--- ORDER BY a.Date desc;
+-- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
+-- a.Start_Time, a.End_Time, a.Expected_Participants 
+-- FROM organizer o, activity a 
+-- WHERE o.Organizer_ID = a.Organizer_ID AND o.Organizer_Name = 'TechEx Organizers' 
+-- ORDER BY a.Date DESC;
 
--- SELECT o.Organizer_Name "Organizer", a.Activity_Name "Activity", a.Location "Location", a.Date "Date of Activity",
--- a.Start_Time "Start Time", a.End_Time "End Time", a.Expected_Participants "Expected Participants"
--- FROM organizer o, activity a
--- WHERE a.Start_Time >= '12:00:00' AND o.Organizer_ID = a.Organizer_ID
--- ORDER BY a.Date, a.Start_Time;
+-- SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, 
+-- a.Start_Time, a.End_Time, a.Expected_Participants 
+-- FROM organizer o, activity a 
+-- WHERE o.Organizer_ID = a.Organizer_ID AND a.Date BETWEEN '2023-11-05' AND '2024-12-01' 
+-- ORDER BY a.Date ASC;
