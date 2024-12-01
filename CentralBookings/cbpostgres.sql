@@ -60,8 +60,9 @@ CREATE TABLE booking (
 --        ('Math Workshop Organizers', 'Internal', 'Tondo, Manila', 'Gusion', null, 'Delos Santos', 'teamsecret@gmail.com', '09998881234'),
 --        ('Chinese For Everyone', 'External', 'Binondo, Manila', 'Alice', null, 'Calugay', 'aguo@pogo.com', '09355541234'),
 --        ('Engineers and Innovators', 'External', 'Poblacion, Makati', 'Bill', null, 'Zuckerburg', 'bz@tech.com', '09678889209'),
---        ('Bio is Life', 'Internal', 'Katipunan, Quezon City', 'Charles', 'H.', 'Dawin', 'cdawin@gmail.com', '09448731309'),
---        ('Humanities Lovers', 'Internal', 'Katipunan, Quezon City', 'Michelle', null, 'Reyes-Guo', 'mreyes@gmail.com', '09355364234');
+--        ('Bio is Life', 'Internal', 'Katipunan, Quezon City', 'Charles', 'H', 'Dawin', 'cdawin@gmail.com', '09448731309'),
+--        ('Humanities Lovers', 'Internal', 'Katipunan, Quezon City', 'Michelle', null, 'Reyes-Guo', 'mreyes@gmail.com', '09355364234'),
+--        ('Scholars Hub', 'Internal', 'Katipunan, Quezon City', 'Reg', I, 'Strar', 'regstrar@gmail.com', '09357824599');
 
 -- INSERT INTO activity (Activity_Name, Date, Location, Start_Time, End_Time, Expected_Participants, Organizer_ID)
 -- VALUES ('Tech Conference', '2023-11-01', 'Convention Center', '09:00:00', '17:00:00', 50, 1),
