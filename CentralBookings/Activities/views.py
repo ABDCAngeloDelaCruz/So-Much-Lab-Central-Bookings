@@ -1,8 +1,8 @@
 from django.db import connection
 from django.shortcuts import render
 
-# relative import of forms
-from .models import Activity, Organizer, Participant, Booking, Department
+
+from .models import Activity, Organizer
 
 
 def home_view(request):
@@ -14,43 +14,55 @@ def activities_list_view(request):
 
     # Default query
     query = "SELECT o.Organizer_Name, a.Activity_Name, a.Location, a.Date, a.Start_Time, a.End_Time, a.Expected_Participants FROM organizer o, activity a WHERE o.Organizer_ID = a.Organizer_ID"
-
-    # Added stuff based on user input
-
-    # Single date
-    filter_date = request.GET.get("filter_date")
-    # Start of date range
-    start_date = request.GET.get("start_date")
-    # End of date range
-    end_date = request.GET.get("end_date")
-    # Organizer name
-    organizer_name = request.GET.get("organizer")
-    # Sort by category, default date but can be by Organizer
-    sort_field = request.GET.get("sort_field", "a.Date")
-    # Sort order, default ascending
-    sort_order = request.GET.get("sort_order", "ASC")
-
     query_params = []
+
+    if request.GET.get('reset') == 'true':
+        filter_date = ''
+        start_time = ''
+        end_time = ''
+        organizer_name = 'all'
+        location_name = 'all'
+        sort_field = 'a.Date'
+        sort_order = 'ASC'
+    else:
+        filter_date = request.GET.get("filter_date")
+        start_time = request.GET.get("start_time")
+        end_time = request.GET.get("end_time")
+        organizer_name = request.GET.get("organizer_field")
+        location_name = request.GET.get("location_field")
+        sort_field = request.GET.get("sort_field", "a.Date")
+        sort_order = request.GET.get("sort_order", "ASC")
 
     if filter_date:
         query += " AND a.Date = %s"
         query_params.append(filter_date)
-    elif start_date and end_date:
-        query += " AND a.Date BETWEEN %s AND %s"
-        query_params.extend([start_date, end_date])
 
-    if organizer_name:
+    if start_time:
+        query += " AND a.Start_Time >= %s"
+        query_params.append(start_time)
+
+    if end_time:
+        query += " AND a.End_Time <= %s"
+        query_params.append(end_time)
+
+    if organizer_name and organizer_name != "all":
         query += " AND o.Organizer_Name = %s"
         query_params.append(organizer_name)
 
-    if sort_field in ["a.Date", "o.Organizer_Name"] and sort_order.upper() in ["ASC", "DESC"]:
+    if location_name and location_name != "all":
+        query += " AND a.Location = %s"
+        query_params.append(location_name)
+
+    if sort_field in ["o.Organizer_Name", "a.Activity_Name", "a.Location", "a.Date", "a.Start_Time", "a.End_Time"] and sort_order.upper() in ["ASC", "DESC"]:
         query += f" ORDER BY {sort_field} {sort_order.upper()}"
 
     cursor.execute(query, query_params)
     query_results = cursor.fetchall()
 
-    return render(request, "activities.html", {'data': query_results})
+    organizers = Organizer.objects.all()
+    locations = Activity.objects.all()
 
+    return render(request, "activities.html", {'data': query_results, 'orgs': organizers, 'locs': locations, 'filter_date': filter_date, 'start_time': start_time, 'end_time': end_time, 'organizer_name': organizer_name, 'location_name': location_name, 'sort_field': sort_field, 'sort_order': sort_order})
 
 def organizer_info_list_view(request):
     cursor = connection.cursor()
@@ -82,7 +94,7 @@ def organizer_info_list_view(request):
                                                    "organizer_details": organizer_details,
                                                    "activities": activities, }
                   )
-
+    
 
 def participant_booking_view(request):
     cursor = connection.cursor()
