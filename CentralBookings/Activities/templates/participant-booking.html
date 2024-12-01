@@ -2,7 +2,7 @@
 
 {% block content %}
 <div class="bg-white p-6 rounded-lg shadow-md">
-  <h1 class="text-2xl font-bold text-gray-800 mb-4">Activity Booking Summary</h1>
+  <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Activity Booking Summary</h1>
   <form method="get" action="{% url 'participant_booking' %}" class="mb-6">
     <label for="participant_id" class="block text-sm font-medium text-gray-700 mb-2">Select Participant:</label>
     <div class="flex items-center space-x-4">
@@ -14,22 +14,22 @@
           </option>
         {% endfor %}
       </select>
-      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600">
+      <button type="submit" class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
         View Records
       </button>
     </div>
   </form>
 
   {% if data %}
-    <div class="mb-6">
-      <p><strong>Participant:</strong> {{ data.0.participant_name }}</p>
-      <p><strong>Birth Date:</strong> {{ data.0.birth_date }}</p>
-      <p><strong>Department:</strong> {{ data.0.department_name }}</p>
-      <p><strong>ID Number:</strong> {{ data.0.id_number }}</p>
-      <p><strong>Participant Type:</strong> {{ data.0.participant_type }}</p>
+    <div class="grid grid-cols-3 gap-4">
+      <p class="col-start-1 row-start-1 text-left"><strong>Participant:</strong> {{ data.0.participant_name }}</p>
+      <p class="col-start-3 row-start-1 text-right"><strong>ID Number:</strong> {{ data.0.id_number }}</p>
+      <p class="col-start-1 row-start-2 text-left"><strong>Birth Date:</strong> {{ data.0.birth_date }}</p>
+      <p class="col-start-2 row-start-2 text-center"><strong>Department:</strong> {{ data.0.department_name }}</p>
+      <p class="col-start-3 row-start-2 text-right"><strong>Participant Type:</strong> {{ data.0.participant_type }}</p>
     </div>
-
-    <h2 class="text-xl font-semibold text-gray-700 mb-4">Schedule</h2>
+    <br>
+    <h2 class="text-xl font-bold text-gray-700 mb-4 text-center">Schedule</h2>
     <div class="overflow-x-auto">
       <table class="min-w-full bg-white border border-gray-200 rounded-lg shadow-sm">
         <thead class="bg-gray-100 border-b">
@@ -64,14 +64,5 @@
     {% endif %}
   {% endif %}
 </div>
-
-<script type="application/json" id="data-json">
-    {{ data|json_script:"data" }}
-  </script>
-
-<script>
-    const data = JSON.parse(document.getElementById('data-json').textContent);
-    console.log(data);
-</script>
 {% endblock %}
 
