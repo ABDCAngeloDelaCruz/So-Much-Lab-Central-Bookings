@@ -6,41 +6,38 @@
       <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Organizer Information</h1>
 
       <form method="get" class="mb-4">
-        <label for="organizer" class="block mb-2">Select Organizer:</label>
-        <select id="organizer" name="organizer" class="border rounded p-2 w-full">
-          <option value="" {% if not selected_organizer %}selected{% endif %}>-- Select an Organizer --</option>
-          {% for organizer in organizers %}
-            <option value="{{ organizer.0 }}" {% if organizer.0 == selected_organizer %}selected{% endif %}>
-              {{ organizer.0 }}
-            </option>
-          {% endfor %}
-        </select>
-        <button type="submit" class="mt-4 bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-400  focus:outline-none">
-          View Organizer's Information
-        </button>
+        <label for="organizer" class="block text-sm font-medium">Select Organizer:</label>
+        <div class="flex items-center space-x-4">
+          <select id="organizer" name="organizer" class="border rounded p-2 w-full">
+            <option value="" {% if not selected_organizer %}selected{% endif %}>-- Select an Organizer --</option>
+            {% for organizer in organizers %}
+              <option value="{{ organizer.0 }}" {% if organizer.0 == selected_organizer %}selected{% endif %}>
+                {{ organizer.0 }}
+              </option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-400  focus:outline-none">
+            View Organizer
+          </button>
+        </div>
       </form>
 
       {% if organizer_details %}
         <div class="mb-6">
-          <h2 class="text-xl font-semibold mb-4">Organizer Details</h2>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <p><strong>Organizer ID:</strong> {{ organizer_details.0 }}</p>
-              <p><strong>Name:</strong> {{ organizer_details.1 }}</p>
-              <p><strong>Contact Person:</strong> 
-                {{ organizer_details.2 }} 
-                {% if organizer_details.3 is not None %}
-                  {{ organizer_details.3 }}.
-                {% endif %} 
-                {{ organizer_details.4 }}
-              </p>
-              <p><strong>Contact Email:</strong> {{ organizer_details.5 }}</p>
-              <p><strong>Contact Number:</strong> {{ organizer_details.6 }}</p>
-            </div>
-            <div>
-              <p><strong>Type:</strong> {{ organizer_details.7 }}</p>
-              <p><strong>Address:</strong> {{ organizer_details.8 }}</p>
-            </div>
+          <div class="grid grid-cols-2 gap-4">
+            <p class="col-start-1 row-start-1 text-left"><strong>Organizer ID:</strong> {{ organizer_details.0 }}</p>
+            <p class="col-start-1 row-start-2 text-left"><strong>Name:</strong> {{ organizer_details.1 }}</p>
+            <p class="col-start-1 row-start-3 text-left"><strong>Contact Person:</strong> 
+              {{ organizer_details.2 }} 
+              {% if organizer_details.3 is not None %}
+                {{ organizer_details.3 }}.
+              {% endif %} 
+              {{ organizer_details.4 }}
+            </p>
+            <p class="col-start-1 row-start-4 text-left"><strong>Contact Email:</strong> {{ organizer_details.5 }}</p>
+            <p class="col-start-1 row-start-5 text-left"><strong>Contact Number:</strong> {{ organizer_details.6 }}</p>
+            <p class="col-start-2 row-start-1 text-left"><strong>Type:</strong> {{ organizer_details.7 }}</p>
+            <p class="col-start-2 row-start-2 text-left"><strong>Address:</strong> {{ organizer_details.8 }}</p>
           </div>
         </div>
       {% endif %}
@@ -48,22 +45,22 @@
       {% if selected_organizer %}
         {% if activities %}
           <div>
-            <h2 class="text-xl font-semibold mb-2">Organizer Activities</h2>
+            <h2 class="text-xl font-semibold mb-2 text-center">Organizer Activities</h2>
             <table class="w-full text-left">
               <thead class="border-b">
-                <tr class="text-sm">
-                  <th>Activity</th>
-                  <th>Location</th>
-                  <th>Date</th>
-                  <th>Start Time</th>
-                  <th>End Time</th>
+                <tr class="text-sm bg-gray-400 border-b">
+                  <th class="px-4 py-2">Activity</th>
+                  <th class="px-4 py-2">Location</th>
+                  <th class="px-4 py-2">Date</th>
+                  <th class="px-4 py-2">Start Time</th>
+                  <th class="px-4 py-2">End Time</th>
                 </tr>
               </thead>
               <tbody class="text-neutral-950">
                 {% for activity in activities %}
                   <tr class="border-b">
                     {% for column in activity %}
-                      <td class="py-2 pr-3">{{ column }}</td>
+                      <td class="px-4 py-2">{{ column }}</td>
                     {% endfor %}
                   </tr>
                 {% endfor %}
@@ -71,7 +68,7 @@
             </table>
           </div>
         {% else %}
-          <p class="text-gray-500">This organizer doesn't have an Activity yet.</p>
+          <p class="text-center">This organizer doesn't have an Activity yet.</p>
         {% endif %}
       {% endif %}
     </div>
