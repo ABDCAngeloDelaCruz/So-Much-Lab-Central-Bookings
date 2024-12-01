@@ -4,44 +4,67 @@
 
   <div id="container">
     <div class="bg-white shadow p-6"> 
-      <h1 class="text-lg mb-4">Activity List</h1> 
-
-      <form method="get" class="mb-4">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label for="filter_date">Filter by Date:</label>
-            <input type="date" id="filter_date" name="filter_date" class="border rounded p-2 w-full" value="{{ request.GET.filter_date }}">
-          </div>
-          <div>
-            <label for="start_date">Start Date:</label>
-            <input type="date" id="start_date" name="start_date" class="border rounded p-2 w-full" value="{{ request.GET.start_date }}">
-          </div>
-          <div>
-            <label for="end_date">End Date:</label>
-            <input type="date" id="end_date" name="end_date" class="border rounded p-2 w-full" value="{{ request.GET.end_date }}">
-          </div>
-          <div>
-            <label for="organizer">Filter by Organizer:</label>
-            <input type="text" id="organizer" name="organizer" class="border rounded p-2 w-full" placeholder="Organizer name" value="{{ request.GET.organizer }}">
-          </div>
-          <div>
-            <label for="sort_field">Sort By:</label>
-            <select id="sort_field" name="sort_field" class="border rounded p-2 w-full">
-              <option value="a.Date" {% if request.GET.sort_field == "a.Date" or not request.GET.sort_field %}selected{% endif %}>Date</option>
-              <option value="o.Organizer_Name" {% if request.GET.sort_field == "o.Organizer_Name" %}selected{% endif %}>Organizer Name</option>
-            </select>
-          </div>
-          <div>
-            <label for="sort_order">Order:</label>
-            <select id="sort_order" name="sort_order" class="border rounded p-2 w-full">
-              <option value="ASC" {% if request.GET.sort_order == "ASC" or not request.GET.sort_order %}selected{% endif %}>Ascending</option>
-              <option value="DESC" {% if request.GET.sort_order == "DESC" %}selected{% endif %}>Descending</option>
-            </select>
-          </div>
+      <h1 class="text-2xl font-bold text-gray-800 mb-4 text-center">Activity List</h1> 
+      <form method="get" class="grid grid-cols-12 gap-4 mb-4 items-center">
+        <div class="col-span-3 flex flex-col gap-2">
+          <label for="filter_date" class="text-sm text-neutral-950 whitespace-nowrap">Filter by Date:</label>
+          <input type="date" id="filter_date" name="filter_date" class="border border-neutral-300 rounded-md p-2 text-neutral-950" value="{{ filter_date }}">
         </div>
-        <button type="submit" class="mt-4 bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-4 py-2 rounded transition-colors duration-300 ease-in-out hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-400">
-            Apply Filters
-        </button>
+
+        <div class="col-span-3 flex flex-col gap-2">
+          <label for="start_time" class="text-sm text-neutral-950 whitespace-nowrap">Filter by Start Time:</label>
+          <input type="time" id="start_time" name="start_time" class="border border-neutral-300 rounded-md p-2 text-neutral-950" value="{{ start_time }}">
+        </div>
+
+        <div class="col-span-3 flex flex-col gap-2">
+          <label for="end_time" class="text-sm text-neutral-950 whitespace-nowrap">Filter by End Time:</label>
+          <input type="time" id="end_time" name="end_time" class="border border-neutral-300 rounded-md p-2 text-neutral-950" value="{{ end_time }}">
+        </div>    
+
+        <div class="col-span-3 flex flex-col gap-2">
+          <label for="organizer" class="text-sm text-neutral-950">Filter by Organizer:</label>
+          <select id="organizer_field" name="organizer_field" class="border border-neutral-300 rounded-md p-2 text-neutral-950">
+            <option value="all" {% if organizer_name == "all" or not organizer_name %}selected{% endif %}>All Organizers</option>
+            {% for o in orgs %}
+            <option value="{{ o.organizer_name }}" {% if organizer_name == o.organizer_name %}selected{% endif %}>{{ o.organizer_name }}</option>
+            {% endfor%}
+          </select>
+        </div>
+
+        <div class="col-span-3 flex flex-col gap-2">
+          <label for="location" class="text-sm text-neutral-950">Filter by Location:</label>
+          <select id="location_field" name="location_field" class="border border-neutral-300 rounded-md p-2 text-neutral-950">
+            <option value="all" {% if location_name == "all" or not location_name %}selected{% endif %}>All Locations</option>
+            {% for l in locs %}
+            <option value="{{ l.location }}" {% if location_name == l.location %}selected{% endif %}>{{ l.location }}</option>
+            {% endfor%}
+          </select>
+        </div>
+
+        <div class="col-span-3 flex flex-col gap-2">
+          <label for="sort_field" class="text-sm text-neutral-950">Sort By:</label>
+          <select id="sort_field" name="sort_field" class="border border-neutral-300 rounded-md p-2 text-neutral-950">
+            <option value="o.Organizer_Name" {% if sort_field == "o.Organizer_Name" or not sort_field %}selected{% endif %}>Organizer Name</option>
+            <option value="a.Activity_Name" {% if sort_field == "a.Activity_Name" %}selected{% endif %}>Activity Name</option>
+            <option value="a.Location" {% if sort_field == "a.Location" %}selected{% endif %}>Location</option>
+            <option value="a.Date" {% if sort_field == "a.Date" %}selected{% endif %}>Date</option>
+            <option value="a.Start_Time" {% if sort_field == "a.Start_Time" %}selected{% endif %}>Start Time</option>
+            <option value="a.End_Time" {% if sort_field == "a.End_Time" %}selected{% endif %}>End Time</option>
+          </select>
+        </div>
+        
+        <div class="col-span-3 flex flex-col gap-2">
+          <label for="sort_order" class="text-sm text-neutral-950">Order:</label>
+          <select id="sort_order" name="sort_order" class="border border-neutral-300 rounded-md p-2 text-neutral-950">
+            <option value="ASC" {% if sort_order == "ASC" or not sort_order %}selected{% endif %}>Ascending</option>
+            <option value="DESC" {% if sort_order == "DESC" %}selected{% endif %}>Descending</option>
+          </select>
+        </div>
+
+        <div class="col-span-3 flex justify-center items-end gap-4">
+          <button type="submit" class="mt-4 bg-gradient-to-r from-purple-600 to-indigo-700 text-white px-10 py-2 rounded transition-colors duration-300 ease-in-out hover:bg-gradient-to-r hover:from-indigo-400 hover:to-indigo-400 focus:outline-none"> Apply </button>
+          <button type="submit" id="reset" name="reset" value="true" class="bg-gradient-to-r bg-gray-300 to-gray-300 text-neutral-950 px-6 py-2 rounded transition-colors duration-300 ease-in-out hover:from-gray-400 hover:to-gray-400 min-w-md focus:outline-none">Reset</button>
+        </div>
       </form>
       
       <table class="w-full text-left"> 
@@ -56,6 +79,7 @@
             <th>Expected Participants</th> 
           </tr> 
         </thead> 
+
         <tbody class="text-neutral-950 "> 
           {% for row in data %}
 
@@ -68,8 +92,14 @@
           </tr>  
 
           {% endfor %}
-          </tbody> 
-        </table> 
+          
+        </tbody> 
+      </table> 
+        
+        {% if not data %}
+        <div class="flex justify-center items-center pt-2">Nothing Found</div>
+        {% endif %}
+
       </div>
   </div> 
 {% endblock %}
