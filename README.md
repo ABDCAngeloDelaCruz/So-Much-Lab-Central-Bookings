@@ -26,7 +26,7 @@ psql -U postgres
 6. Run the following command to populate the database. Exit `psql` afterwards.
 
 ```pgsql
-\i cbpostgresql.sql
+\i cbpostgres.sql
 ```
 
 7. Run the following commands:
